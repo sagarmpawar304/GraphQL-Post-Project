@@ -55,7 +55,7 @@ const resolvers = {
                     createdAt: new Date().toISOString(),
                 });
                 yield user.save();
-                const token = token_1.createToken(user.id, user.email);
+                const token = token_1.createToken(user.id, user.username);
                 const { id, createdAt } = user;
                 return {
                     id,
@@ -89,7 +89,7 @@ const resolvers = {
                             password: "Password doesn't match",
                         },
                     });
-                const token = token_1.createToken(user.id, user.email);
+                const token = token_1.createToken(user.id, user.username);
                 return {
                     id: user.id,
                     username: user.username,

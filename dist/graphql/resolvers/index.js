@@ -7,7 +7,7 @@ const postResolver_1 = __importDefault(require("./postResolver"));
 const userResolver_1 = __importDefault(require("./userResolver"));
 const resolvers = {
     Query: Object.assign({}, postResolver_1.default.Query),
-    Mutation: Object.assign({}, userResolver_1.default.Mutation),
+    Mutation: Object.assign(Object.assign({}, userResolver_1.default.Mutation), postResolver_1.default.Mutation),
 };
 exports.default = resolvers;
 //# sourceMappingURL=index.js.map

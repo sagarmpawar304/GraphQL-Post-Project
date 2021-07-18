@@ -20,6 +20,8 @@ if (!expires_in) throw new Error('Please provide expires in duration for token.'
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  context: ({ req }) => ({ req }),
+  cors: true,
 });
 
 mongoose

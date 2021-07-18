@@ -2,6 +2,7 @@ import { Model, Document, Schema, model } from 'mongoose';
 
 type PostAttr = {
   body: string;
+  user: string;
   username: string;
   createdAt: string;
 };

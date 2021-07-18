@@ -28,10 +28,13 @@ const typeDefs = apollo_server_1.gql `
 
   type Query {
     getPosts: [Post]
+    getPost(postId: ID!): Post
   }
   type Mutation {
     register(registerInput: RegisterInput): User!
     login(loginInput: LoginInput): User!
+    createPost(body: String!): Post!
+    deletePost(postId: ID!): String!
   }
 `;
 exports.default = typeDefs;

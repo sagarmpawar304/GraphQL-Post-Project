@@ -68,7 +68,7 @@ const resolvers = {
       await user.save();
 
       // Create token
-      const token = createToken(user.id, user.email);
+      const token = createToken(user.id, user.username);
 
       // Send Token with user
       const { id, createdAt } = user;
@@ -109,7 +109,7 @@ const resolvers = {
         });
 
       // Create token
-      const token = createToken(user.id, user.email);
+      const token = createToken(user.id, user.username);
 
       return {
         id: user.id,

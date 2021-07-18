@@ -9,8 +9,8 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 dotenv_1.default.config();
 const secret = process.env.JWT_SECRET_KEY;
 const expiresIn = process.env.EXPIRES_IN;
-const createToken = (id, email) => {
-    return jsonwebtoken_1.default.sign({ id, email }, secret, { expiresIn });
+const createToken = (id, username) => {
+    return jsonwebtoken_1.default.sign({ id, username }, secret, { expiresIn });
 };
 exports.createToken = createToken;
 const verifyToken = (token) => {

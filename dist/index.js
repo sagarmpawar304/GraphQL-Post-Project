@@ -21,6 +21,8 @@ if (!expires_in)
 const server = new apollo_server_1.ApolloServer({
     typeDefs: typeDefs_1.default,
     resolvers: resolvers_1.default,
+    context: ({ req }) => ({ req }),
+    cors: true,
 });
 mongoose_1.default
     .connect(mongoUrl, {
