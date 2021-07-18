@@ -1,55 +1,26 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const apollo_server_1 = require("apollo-server");
-const graphql_tag_1 = __importDefault(require("graphql-tag"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const mongoose_1 = __importDefault(require("mongoose"));
-const postModel_1 = __importDefault(require("./models/postModel"));
+const typeDefs_1 = __importDefault(require("./graphql/typeDefs"));
+const resolvers_1 = __importDefault(require("./graphql/resolvers"));
 dotenv_1.default.config();
 const mongoUrl = process.env.MONGO_URL;
+const jwt_secret_key = process.env.JWT_SECRET_KEY;
+const expires_in = process.env.EXPIRES_IN;
 if (!mongoUrl)
     throw new Error('Please provide mongo url.');
-const typeDefs = graphql_tag_1.default `
-  type Post {
-    id: ID!
-    body: String!
-    username: String!
-    createdAt: String!
-  }
-  type Query {
-    getPosts: [Post]
-  }
-`;
-const resolvers = {
-    Query: {
-        getPosts() {
-            return __awaiter(this, void 0, void 0, function* () {
-                try {
-                    const posts = yield postModel_1.default.find();
-                    return posts;
-                }
-                catch (err) {
-                    throw new Error(err);
-                }
-            });
-        },
-    },
-};
+if (!jwt_secret_key)
+    throw new Error('Please provide secret key.');
+if (!expires_in)
+    throw new Error('Please provide expires in duration for token.');
 const server = new apollo_server_1.ApolloServer({
-    typeDefs,
-    resolvers,
+    typeDefs: typeDefs_1.default,
+    resolvers: resolvers_1.default,
 });
 mongoose_1.default
     .connect(mongoUrl, {

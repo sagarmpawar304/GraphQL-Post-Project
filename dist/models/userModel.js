@@ -42,4 +42,5 @@ userSchema.pre('save', function (next) {
     });
 });
 const User = mongoose_1.default.model('User', userSchema);
+exports.default = User;
 //# sourceMappingURL=userModel.js.map

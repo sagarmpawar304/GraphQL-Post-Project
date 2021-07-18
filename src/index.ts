@@ -1,42 +1,21 @@
 import { ApolloServer } from 'apollo-server';
-import gql from 'graphql-tag';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 
-import Post from './models/postModel';
+import typeDefs from './graphql/typeDefs';
+import resolvers from './graphql/resolvers';
 
-// For access environmental variables in .env files
+// For access env variables in .env files
 dotenv.config();
 
+// env variables
 const mongoUrl = process.env.MONGO_URL;
+const jwt_secret_key = process.env.JWT_SECRET_KEY;
+const expires_in = process.env.EXPIRES_IN;
+
 if (!mongoUrl) throw new Error('Please provide mongo url.');
-
-// type defination were all query's are included
-const typeDefs = gql`
-  type Post {
-    id: ID!
-    body: String!
-    username: String!
-    createdAt: String!
-  }
-  type Query {
-    getPosts: [Post]
-  }
-`;
-
-// Resolver ar those who resolves the query
-const resolvers = {
-  Query: {
-    async getPosts() {
-      try {
-        const posts = await Post.find();
-        return posts;
-      } catch (err) {
-        throw new Error(err);
-      }
-    },
-  },
-};
+if (!jwt_secret_key) throw new Error('Please provide secret key.');
+if (!expires_in) throw new Error('Please provide expires in duration for token.');
 
 const server = new ApolloServer({
   typeDefs,
