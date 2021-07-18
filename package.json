@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "repository": {
+    "github": "https://github.com/smpawar001/graphQL-Post-Project.git"
+  },
   "scripts": {
     "watch": "tsc -w",
     "start": "nodemon dist/index.js",
